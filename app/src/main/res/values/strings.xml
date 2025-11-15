@@ -1,0 +1,9 @@
+<resources>
+    <string name="app_name">Calculatrice</string>
+    <string name="premier_nombre">Nombre 1</string>
+    <string name="deuxieme_nombre">Nombre 2</string>
+    <string name="hint_nombre1">Entrez le premier nombre</string>
+    <string name="hint_nombre2">Entrez le deuxième nombre</string>
+    <string name="bouton_calculer">Calculer la Somme</string>
+    <string name="resultat">Résultat</string>
+</resources>

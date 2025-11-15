@@ -1,0 +1,94 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:padding="24dp"
+    android:gravity="center"
+    android:background="#F5F5F5">
+
+    <!-- Titre de l'application -->
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Calculatrice Simple"
+        android:textSize="28sp"
+        android:textStyle="bold"
+        android:textColor="#2196F3"
+        android:layout_marginBottom="40dp" />
+
+    <!-- Premier nombre -->
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Nombre 1"
+        android:textSize="18sp"
+        android:textColor="#333333"
+        android:layout_marginBottom="8dp" />
+
+    <EditText
+        android:id="@+id/editTextNombre1"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="Entrez le premier nombre"
+        android:inputType="numberDecimal"
+        android:textSize="16sp"
+        android:padding="16dp"
+        android:background="@drawable/edittext_background"
+        android:layout_marginBottom="24dp" />
+
+    <!-- Deuxième nombre -->
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Nombre 2"
+        android:textSize="18sp"
+        android:textColor="#333333"
+        android:layout_marginBottom="8dp" />
+
+    <EditText
+        android:id="@+id/editTextNombre2"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="Entrez le deuxième nombre"
+        android:inputType="numberDecimal"
+        android:textSize="16sp"
+        android:padding="16dp"
+        android:background="@drawable/edittext_background"
+        android:layout_marginBottom="32dp" />
+
+    <!-- Bouton de calcul -->
+    <Button
+        android:id="@+id/buttonCalculer"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Calculer la Somme"
+        android:textSize="18sp"
+        android:textStyle="bold"
+        android:backgroundTint="#2196F3"
+        android:textColor="@android:color/white"
+        android:padding="16dp"
+        android:layout_marginBottom="32dp" />
+
+    <!-- Résultat -->
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Résultat"
+        android:textSize="18sp"
+        android:textColor="#333333"
+        android:layout_marginBottom="8dp" />
+
+    <TextView
+        android:id="@+id/textViewResultat"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="0"
+        android:textSize="24sp"
+        android:textStyle="bold"
+        android:textColor="#4CAF50"
+        android:gravity="center"
+        android:padding="20dp"
+        android:background="@drawable/result_background" />
+
+</LinearLayout>
