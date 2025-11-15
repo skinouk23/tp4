@@ -1,62 +1,149 @@
 package com.example.tp4;
 
+import androidx.appcompat.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
-import android.widget.Toast;
-import androidx.appcompat.app.AppCompatActivity;
-
-import com.example.tp4.R;
 
 public class MainActivity extends AppCompatActivity {
 
-    private EditText editTextNombre1, editTextNombre2;
-    private TextView textViewResultat;
-    private Button buttonCalculer;
+    private EditText editTextNumber1, editTextNumber2;
+    private Button buttonSelectAdd, buttonSelectSubtract, buttonSelectMultiply, buttonSelectDivide;
+    private Button buttonCalculate;
+    private TextView textViewOperation, textViewResult;
+
+    private String currentOperation = "+"; // Opération par défaut
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.calculatrice);
+        setContentView(R.layout.activity_main);
 
-        // Initialisation des vues
-        editTextNombre1 = findViewById(R.id.editTextNombre1);
-        editTextNombre2 = findViewById(R.id.editTextNombre2);
-        textViewResultat = findViewById(R.id.textViewResultat);
-        buttonCalculer = findViewById(R.id.buttonCalculer);
+        // Initialiser les vues
+        editTextNumber1 = findViewById(R.id.editTextNumber1);
+        editTextNumber2 = findViewById(R.id.editTextNumber2);
+        buttonSelectAdd = findViewById(R.id.buttonSelectAdd);
+        buttonSelectSubtract = findViewById(R.id.buttonSelectSubtract);
+        buttonSelectMultiply = findViewById(R.id.buttonSelectMultiply);
+        buttonSelectDivide = findViewById(R.id.buttonSelectDivide);
+        buttonCalculate = findViewById(R.id.buttonCalculate);
+        textViewOperation = findViewById(R.id.textViewOperation);
+        textViewResult = findViewById(R.id.textViewResult);
 
-        // Gestion du clic sur le bouton
-        buttonCalculer.setOnClickListener(new View.OnClickListener() {
+        // Définir les écouteurs pour sélectionner l'opération
+        buttonSelectAdd.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                calculerSomme();
+                currentOperation = "+";
+                updateOperationDisplay("Addition");
+                resetButtonColors();
+                buttonSelectAdd.setBackgroundColor(getResources().getColor(android.R.color.holo_green_light));
+            }
+        });
+
+        buttonSelectSubtract.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                currentOperation = "-";
+                updateOperationDisplay("Soustraction");
+                resetButtonColors();
+                buttonSelectSubtract.setBackgroundColor(getResources().getColor(android.R.color.holo_green_light));
+            }
+        });
+
+        buttonSelectMultiply.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                currentOperation = "*";
+                updateOperationDisplay("Multiplication");
+                resetButtonColors();
+                buttonSelectMultiply.setBackgroundColor(getResources().getColor(android.R.color.holo_green_light));
+            }
+        });
+
+        buttonSelectDivide.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                currentOperation = "/";
+                updateOperationDisplay("Division");
+                resetButtonColors();
+                buttonSelectDivide.setBackgroundColor(getResources().getColor(android.R.color.holo_green_light));
+            }
+        });
+
+        // Bouton pour effectuer le calcul
+        buttonCalculate.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                performCalculation();
             }
         });
     }
 
-    private void calculerSomme() {
-        // Vérifier si les champs ne sont pas vides
-        if (editTextNombre1.getText().toString().isEmpty() ||
-                editTextNombre2.getText().toString().isEmpty()) {
-            Toast.makeText(this, "Veuillez entrer les deux nombres", Toast.LENGTH_SHORT).show();
+    private void resetButtonColors() {
+        buttonSelectAdd.setBackgroundColor(getResources().getColor(android.R.color.transparent));
+        buttonSelectSubtract.setBackgroundColor(getResources().getColor(android.R.color.transparent));
+        buttonSelectMultiply.setBackgroundColor(getResources().getColor(android.R.color.transparent));
+        buttonSelectDivide.setBackgroundColor(getResources().getColor(android.R.color.transparent));
+    }
+
+    private void updateOperationDisplay(String operationName) {
+        textViewOperation.setText("Opération: " + operationName);
+    }
+
+    private void performCalculation() {
+        String num1Str = editTextNumber1.getText().toString();
+        String num2Str = editTextNumber2.getText().toString();
+
+        // Vérifier si les champs sont vides
+        if (num1Str.isEmpty() || num2Str.isEmpty()) {
+            textViewResult.setText("Veuillez entrer deux nombres");
             return;
         }
 
         try {
-            // Récupérer les valeurs des EditText
-            double nombre1 = Double.parseDouble(editTextNombre1.getText().toString());
-            double nombre2 = Double.parseDouble(editTextNombre2.getText().toString());
+            double num1 = Double.parseDouble(num1Str);
+            double num2 = Double.parseDouble(num2Str);
+            double result = 0;
+            String operationSymbol = "";
+            String operationName = "";
 
-            // Calculer la somme
-            double somme = nombre1 + nombre2;
+            switch (currentOperation) {
+                case "+":
+                    result = num1 + num2;
+                    operationSymbol = "+";
+                    operationName = "Addition";
+                    break;
+                case "-":
+                    result = num1 - num2;
+                    operationSymbol = "-";
+                    operationName = "Soustraction";
+                    break;
+                case "*":
+                    result = num1 * num2;
+                    operationSymbol = "×";
+                    operationName = "Multiplication";
+                    break;
+                case "/":
+                    if (num2 == 0) {
+                        textViewResult.setText("Erreur: Division par zéro");
+                        return;
+                    }
+                    result = num1 / num2;
+                    operationSymbol = "÷";
+                    operationName = "Division";
+                    break;
+            }
 
             // Afficher le résultat
-            textViewResultat.setText(String.valueOf(somme));
+            String resultText = String.format("%s: %.2f %s %.2f = %.2f",
+                    operationName, num1, operationSymbol, num2, result);
+            textViewResult.setText("Résultat: " + resultText);
 
         } catch (NumberFormatException e) {
-            Toast.makeText(this, "Veuillez entrer des nombres valides", Toast.LENGTH_SHORT).show();
+            textViewResult.setText("Erreur: Format de nombre invalide");
         }
     }
 }
